@@ -8,7 +8,7 @@
 #include <iomanip>
 #include <sstream>
 
-// Console size, width by heightttttttttttt
+// Console size, width by height
 COORD ConsoleSize = {100, 80};
 
 double elapsedTime;
