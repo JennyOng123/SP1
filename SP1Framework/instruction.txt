@@ -1,0 +1,48 @@
+
+ _____    __ __ _____  __         ___ __________  ___    __ __    
+  \_   \/\ \ \ _\__   \/__\/\ /\  / __\__   \_   \/___\/\ \ \ _\   
+   / /\/  \/ \ \  / /\/ \// / \ \/ /    / /\// /\//  //  \/ \ \    
+/\/ /_/ /\  /_\ \/ / / _  \ \_/ / /___ / //\/ /_/ \_// /\  /_\ \   
+\____/\_\ \/ \__/\/  \/ \_/\___/\____/ \/ \____/\___/\_\ \/ \__/
+
+
+
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+  *                                                         *
+  *  Match the dropping letters with your input.            *
+  *                                                         *
+  *  Match words sucessfully to increase score Multiplier!  *
+  *                                                         *
+  *  Press 'Spacebar' to confirm input.                     *
+  *                                                         *
+  *  Press 'Enter' to access Power Ups.                     *
+  *                                                         *
+  *  Prevent the words from reaching the bottom,            *
+  *                                                         *
+  *  failure to do so will subtract one health!             *
+  *                                                         *
+  *  When your health hits Zero, its game over!             *
+  *                                                         *
+  *  wrong entries will reset combo & minus Score.          *
+  *                                                         *
+  *  Activate your typing fingers and have fun!             *
+  *                                                         *
+  *                                                         *
+  *                                                         *
+  *                                                         *
+  *                                                         *
+  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
+
+
+
+                                   __               _ 
+           /\  /\__ ___   _____   / _|_   _ _ __   / \
+          / /_/ / _` \ \ / / _ \ | |_| | | | '_ \ /  /
+         / __  / (_| |\ V /  __/ |  _| |_| | | | /\_/ 
+         \/ /_/ \__,_| \_/ \___| |_|  \__,_|_| |_\/  
+
+
+
+
+
+  Return to Main Menu ------------------------------------[1]
