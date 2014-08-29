@@ -20,9 +20,27 @@ int moveWord(int loc, int speed)
 		return 1;
 }
 
-void matchWord(vector<string>& word, string& input)
+void clearWord(vector<string>& word, string& input, int c)
 {
+	if(word.size() > 4)
+	{
+		input ="";
+		iter_swap ( word.begin()+c , word.begin()+4 );
+		word.erase(word.begin()+4);
+	}
+	else
+	{
 			input ="";
-			iter_swap ( word.begin() , word.begin()+4 );
-			word.erase(word.begin()+4);
+			word[c] ="";
+	}
+}
+
+void resetPosition(COORD& wordLoc)
+{
+	wordLoc.Y=1;
+}
+
+void setSpeed(int& s)
+{
+	s =rand() % 2 + 1;
 }

@@ -18,7 +18,7 @@ bool keyPressed[K_COUNT];
 // Game specific variables here
 COORD charLocation;
 int wordsZapped =0,score =0, CDtimer = 30 ,modeSelection=4,multiply=0;
-double rand1,rand2,rand3,rand4;
+int speed1,speed2,speed3,speed4;
 COORD wordLocation1, wordLocation2, wordLocation3, wordLocation4, airplaneLoc,projectileLoc;
 COORD c;
 vector<string> words;
@@ -38,7 +38,7 @@ void init()
 	multiply =0;
 	words.clear();
 
-    initConsole(ConsoleSize, "T Y P I E");
+	initConsole(ConsoleSize, "T Y P I E");
 
 	// set the userInput textfield location to start game state.
 	charLocation.X = ConsoleSize.X / 2-5;
@@ -60,24 +60,22 @@ void init()
 	projectileLoc.X = airplaneLoc.X+6;
 	projectileLoc.Y = airplaneLoc.Y;
 
-	/* initialize random seed: */
-	srand (time(NULL));
 
 	//set dropping speed
-	rand1=rand() % 2 + 1;
-	rand2=rand() % 2 + 1;
-	rand3=rand() % 2 + 1;
-	rand4=rand() % 2 + 1;
+	speed1=rand() % 2 + 1;
+	speed2=rand() % 2 + 1;
+	speed3=rand() % 2 + 1;
+	speed4=rand() % 2 + 1;
 
 	elapsedTime = 0.0;
 }
 
 void shutdown()
 {
-    // Reset to white text on black background
+	// Reset to white text on black background
 	colour(FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED);
 
-    shutDownConsole();
+	shutDownConsole();
 }
 
 //GAME MENU AND SELECTIONS
@@ -456,8 +454,8 @@ void update(double dt)
 }
 void render()
 {    
-    // Clears the buffer with this colour attribute
-    clearBuffer(0x0);
+	// Clears the buffer with this colour attribute
+	clearBuffer(0x0);
 
 	switch(GameState)
 	{
@@ -480,27 +478,27 @@ void render()
 	case Exit: exitGame();
 		break;
 	}
-    // Set up sample colours, and output shadings
-    const WORD colors[] =   {
-	                        0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
-	                        0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6
-	                        };
-	
-
-    /*// displays the framerate
-    std::ostringstream ss;
-    ss << std::fixed << std::setprecision(3);
-    ss << 1.0 / deltaTime << "fps";
-    c.X = ConsoleSize.X-9;
-    c.Y = 0;
-    writeToBuffer(c, ss.str());
-    */
+	// Set up sample colours, and output shadings
+	const WORD colors[] =   {
+		0x1A, 0x2B, 0x3C, 0x4D, 0x5E, 0x6F,
+		0xA1, 0xB2, 0xC3, 0xD4, 0xE5, 0xF6
+	};
 
 
+	/*// displays the framerate
+	std::ostringstream ss;
+	ss << std::fixed << std::setprecision(3);
+	ss << 1.0 / deltaTime << "fps";
+	c.X = ConsoleSize.X-9;
+	c.Y = 0;
+	writeToBuffer(c, ss.str());
+	*/
 
-    
-    // Writes the buffer to the console, hence you will see what you have written
-    flushBufferToConsole();
+
+
+
+	// Writes the buffer to the console, hence you will see what you have written
+	flushBufferToConsole();
 }
 
 //functions
@@ -509,7 +507,7 @@ void gameHUD()
 	std::ostringstream ss;
 	//render number of words typed
 	ss.str("");
-    ss << wordsZapped;
+	ss << wordsZapped;
 	c.X = 82;
 	c.Y=0;
 	writeToBuffer(c,"Word zapped: ");
@@ -517,14 +515,14 @@ void gameHUD()
 	writeToBuffer(c,ss.str());
 	//render score
 	ss.str("");
-    ss << score;
+	ss << score;
 	c.X = 69;
 	writeToBuffer(c,"Score: ");
 	c.X = 76;
 	writeToBuffer(c,ss.str());
 	//render combo
 	ss.str("");
-    ss << multiply;
+	ss << multiply;
 	c.X=2;
 	writeToBuffer(c,"Combo: ");
 	c.X=9;
@@ -532,7 +530,7 @@ void gameHUD()
 
 	//render timer
 	ss.str("");
-    ss << CDtimer-elapsedTime;
+	ss << CDtimer-elapsedTime;
 	c.X =15;
 	writeToBuffer(c,"Time: ");
 	c.X =20;
@@ -551,10 +549,10 @@ void gameHUD()
 }
 void renderWords()
 {
-	wordLocation1.Y= moveWord(wordLocation1.Y,rand1);
-	wordLocation2.Y= moveWord(wordLocation2.Y,rand2);
-	wordLocation3.Y= moveWord(wordLocation3.Y,rand3);	
-	wordLocation4.Y= moveWord(wordLocation4.Y,rand4);
+	wordLocation1.Y= moveWord(wordLocation1.Y,speed1);
+	wordLocation2.Y= moveWord(wordLocation2.Y,speed2);
+	wordLocation3.Y= moveWord(wordLocation3.Y,speed3);	
+	wordLocation4.Y= moveWord(wordLocation4.Y,speed4);
 	writeToBuffer(wordLocation1,words[0]);
 	writeToBuffer(wordLocation2,words[1]);
 	writeToBuffer(wordLocation3,words[2]);
@@ -565,90 +563,36 @@ void matchWords()
 	if(userInput == words[0])
 	{
 		addScore(multiply, score, wordsZapped);
-		if(words.size() > 4)
-		{
-			/*userInput ="";
-			iter_swap ( words.begin() , words.begin()+4 );
-			words.erase(words.begin()+4);*/
-			matchWord(words,userInput);
-			wordLocation1.Y=1;
-			rand1=rand() % 2 + 1;
-			airplaneLoc.X = wordLocation1.X-3;
-		}
-		else
-		{
-			userInput ="";
-			words[0] ="";
-			wordLocation1.Y=1;
-			rand1=rand() % 2 + 1;
-			airplaneLoc.X = wordLocation1.X-3;
-		}
+		clearWord(words,userInput,0);
+		resetPosition(wordLocation1);
+		setSpeed(speed1);
+		airplaneLoc.X = wordLocation1.X-3;
 	}
 
 	else if(userInput == words[1])
 	{
 		addScore(multiply, score, wordsZapped);
-		if(words.size() > 4)
-		{
-			userInput ="";
-			iter_swap ( words.begin()+1 , words.begin()+4 );
-			words.erase(words.begin()+4);
-			wordLocation2.Y=1;
-			rand2=rand() % 2 + 1;
-			airplaneLoc.X = wordLocation2.X-3;
-		}
-		else
-		{
-			userInput ="";
-			words[1] ="";
-			wordLocation2.Y=1;
-			rand2=rand() % 2 + 1;
-			airplaneLoc.X = wordLocation2.X-3;
-		}
+		clearWord(words,userInput,1);
+		resetPosition(wordLocation2);
+		setSpeed(speed2);
+		airplaneLoc.X = wordLocation2.X-3;
 	}
 	else if(userInput == words[2])
 	{
 		addScore(multiply, score, wordsZapped);
-		if(words.size() > 4)
-		{
-			userInput ="";
-			iter_swap ( words.begin()+2 , words.begin()+4 );
-			words.erase(words.begin()+4);
-			wordLocation3.Y=1;
-			rand3=rand() % 2 + 1;
-			airplaneLoc.X = wordLocation3.X-3;
-		}
-		else
-		{
-			userInput ="";
-			words[2] ="";
-			wordLocation3.Y=1;
-			rand3=rand() % 2 + 1;
-			airplaneLoc.X = wordLocation3.X-3;
-		}
+		clearWord(words,userInput,2);
+		resetPosition(wordLocation3);
+		setSpeed(speed3);
+		airplaneLoc.X = wordLocation3.X-3;
 	}
 	else if(userInput == words[3])
 	{
 		addScore(multiply, score, wordsZapped);
-		if(words.size() > 4)
-		{
-			userInput ="";
-			iter_swap ( words.begin()+3 , words.begin()+4 );
-			words.erase(words.begin()+4);
-			wordLocation4.Y=1;
-			rand4=rand() % 2 + 1;
-			airplaneLoc.X = wordLocation4.X-3;
-		}
-		else
-		{
-			userInput ="";
-			words[3] ="";
-			wordLocation4.Y=1;
-			rand2=rand() % 2 + 1;
-			airplaneLoc.X = wordLocation4.X-3;
-		}
+		clearWord(words,userInput,3);
+		resetPosition(wordLocation4);
+		setSpeed(speed4);
+		airplaneLoc.X = wordLocation4.X-3;
 	}
-
 	else
 	{
 		//doesent match
@@ -691,20 +635,17 @@ void gameTitle()
 {	
 	c.X= 25;
 	c.Y = 10;
-	writeToBuffer(c, " ________  __      __  _____     _____    _____");
-	c.Y++;
-	writeToBuffer(c, "(___  ___) ) \\    / ( (  __ \\   (_   _)  / ___/");
-	c.Y++;
-	writeToBuffer(c, "    ) )     \\ \\  / /   ) )_) )    | |   ( (");
-	c.Y++;
-	writeToBuffer(c, "   ( (       \\ \\/ /   (  ___/     | |    ) __)");
-	c.Y++;
-	writeToBuffer(c, "    ) )       \\  /     ) )        | |   ( ("); 
-	c.Y++;
-	writeToBuffer(c, "   ( (         )(     ( (        _| |__  \\ \\___");
-	c.Y++;
-	writeToBuffer(c, "   /__\\       /__\\    /__\\      /_____(   \\____\\");
-
+	string data;
+	ifstream myfile("TYPIE.txt");
+	if(myfile.is_open())
+	{
+		while(getline(myfile, data))
+		{
+			writeToBuffer(c,data);
+			c.Y++;
+		}
+	}
+	myfile.close();
 }
 
 //Difficulty
