@@ -91,7 +91,6 @@ void render();              // renders the current state of the game to the cons
 void gameHUD();
 void renderWords();
 void matchWords();
-void multiplier();
 void airPlane();
 void projectile();
 void gameOver();

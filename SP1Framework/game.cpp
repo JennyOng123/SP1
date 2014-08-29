@@ -8,7 +8,7 @@
 #include <iomanip>
 #include <sstream>
 
-// Console size, width by height
+// Console size, width by heightt
 COORD ConsoleSize = {100, 80};
 
 double elapsedTime;
@@ -17,9 +17,7 @@ bool keyPressed[K_COUNT];
 
 // Game specific variables here
 COORD charLocation;
-short int wordsZapped =0,score =0, CDtimer = 30 ,modeSelection=4;
-int multiply, checkMultiply;
-bool executeMath;
+int wordsZapped =0,score =0, CDtimer = 30 ,modeSelection=4,multiply=0;
 double rand1,rand2,rand3,rand4;
 COORD wordLocation1, wordLocation2, wordLocation3, wordLocation4, airplaneLoc,projectileLoc;
 COORD c;
@@ -37,6 +35,7 @@ void init()
 	playerName = "";
 	wordsZapped =0;
 	score =0;
+	multiply =0;
 	words.clear();
 
     initConsole(ConsoleSize, "T Y P I E");
@@ -253,57 +252,135 @@ void update(double dt)
 {
 	//Check keypressed
 	if (keyPressed[K_A])
+	{
 		userInput+="A";
+		matchWords();
+	}
 	if (keyPressed[K_B])
+	{
 		userInput+="B";
+		matchWords();
+	}
 	if (keyPressed[K_C])
+	{
 		userInput+="C";
+		matchWords();
+	}
 	if (keyPressed[K_D])
+	{
 		userInput+="D";
+		matchWords();
+	}
 	if (keyPressed[K_E])
+	{
 		userInput+="E";
+		matchWords();
+	}
 	if (keyPressed[K_F])
+	{
 		userInput+="F";
+		matchWords();
+	}
 	if (keyPressed[K_G])
+	{
 		userInput+="G";
+		matchWords();
+	}
 	if (keyPressed[K_H])
+	{
 		userInput+="H";
+		matchWords();
+	}
 	if (keyPressed[K_I])
+	{
 		userInput+="I";
+		matchWords();
+	}
 	if (keyPressed[K_J])
+	{
 		userInput+="J";
+		matchWords();
+	}
 	if (keyPressed[K_K])
+	{
 		userInput+="K";
+		matchWords();
+	}
 	if (keyPressed[K_L])
+	{
 		userInput+="L";
+		matchWords();
+	}
 	if (keyPressed[K_M])
+	{
 		userInput+="M";
+		matchWords();
+	}
 	if (keyPressed[K_N])
+	{
 		userInput+="N";
+		matchWords();
+	}
 	if (keyPressed[K_O])
+	{
 		userInput+="O";
+		matchWords();
+	}
 	if (keyPressed[K_P])
+	{
 		userInput+="P";
+		matchWords();
+	}
 	if (keyPressed[K_Q])
+	{
 		userInput+="Q";
+		matchWords();
+	}
 	if (keyPressed[K_R])
+	{
 		userInput+="R";
+		matchWords();
+	}
 	if (keyPressed[K_S])
+	{
 		userInput+="S";
+		matchWords();
+	}
 	if (keyPressed[K_T])
+	{
 		userInput+="T";
+		matchWords();
+	}
 	if (keyPressed[K_U])
+	{
 		userInput+="U";
+		matchWords();
+	}
 	if (keyPressed[K_V])
+	{
 		userInput+="V";
+		matchWords();
+	}
 	if (keyPressed[K_W])
+	{
 		userInput+="W";
+		matchWords();
+	}
 	if (keyPressed[K_X])
+	{
 		userInput+="X";
+		matchWords();
+	}
 	if (keyPressed[K_Y])
+	{
 		userInput+="Y";
+		matchWords();
+	}
 	if (keyPressed[K_Z])
+	{
 		userInput+="Z";
+		matchWords();
+	}
 	if(keyPressed[K_BACKSPACE])
 	{
 		if(userInput.size()>0){
@@ -347,8 +424,9 @@ void update(double dt)
 	{
 		if(keyPressed[K_SPACE])
 		{
-			// Updating the userInput based on the key press
-			matchWords();
+			// Clear user input.
+			userInput="";
+			multiply =0;
 		}
 		if (keyPressed[K_ESCAPE])
 		{
@@ -357,8 +435,6 @@ void update(double dt)
 		// Start time elapsed when the game starts.
 		elapsedTime += dt;
 		deltaTime = dt;
-		// Score
-		multiplier();
 	}
 
 	else if(GameState == Pausescreen)
@@ -430,28 +506,37 @@ void render()
 //functions
 void gameHUD()
 {
+	std::ostringstream ss;
 	//render number of words typed
+	ss.str("");
+    ss << wordsZapped;
 	c.X = 82;
 	c.Y=0;
 	writeToBuffer(c,"Word zapped: ");
 	c.X = 95;
-	writeToBuffer(c,wordsZapped);
+	writeToBuffer(c,ss.str());
 	//render score
+	ss.str("");
+    ss << score;
 	c.X = 69;
 	writeToBuffer(c,"Score: ");
 	c.X = 76;
-	writeToBuffer(c,score);
+	writeToBuffer(c,ss.str());
 	//render combo
+	ss.str("");
+    ss << multiply;
 	c.X=2;
 	writeToBuffer(c,"Combo: ");
 	c.X=9;
-	writeToBuffer(c,multiply);
+	writeToBuffer(c,ss.str());
 
 	//render timer
+	ss.str("");
+    ss << CDtimer-elapsedTime;
 	c.X =15;
 	writeToBuffer(c,"Time: ");
-	c.X =22;
-	writeToBuffer(c,CDtimer-elapsedTime);
+	c.X =20;
+	writeToBuffer(c,ss.str());
 
 	//print userinput
 	writeToBuffer(charLocation,userInput);
@@ -479,14 +564,13 @@ void matchWords()
 {
 	if(userInput == words[0])
 	{
-		checkMultiply = 1;
-		executeMath = true;
+		addScore(multiply, score, wordsZapped);
 		if(words.size() > 4)
 		{
-			userInput ="";
+			/*userInput ="";
 			iter_swap ( words.begin() , words.begin()+4 );
-			words.erase(words.begin()+4);
-			wordsZapped++;
+			words.erase(words.begin()+4);*/
+			matchWord(words,userInput);
 			wordLocation1.Y=1;
 			rand1=rand() % 2 + 1;
 			airplaneLoc.X = wordLocation1.X-3;
@@ -495,7 +579,6 @@ void matchWords()
 		{
 			userInput ="";
 			words[0] ="";
-			wordsZapped++;
 			wordLocation1.Y=1;
 			rand1=rand() % 2 + 1;
 			airplaneLoc.X = wordLocation1.X-3;
@@ -504,14 +587,12 @@ void matchWords()
 
 	else if(userInput == words[1])
 	{
-		checkMultiply = 1;
-		executeMath = true;
+		addScore(multiply, score, wordsZapped);
 		if(words.size() > 4)
 		{
 			userInput ="";
 			iter_swap ( words.begin()+1 , words.begin()+4 );
 			words.erase(words.begin()+4);
-			wordsZapped++;
 			wordLocation2.Y=1;
 			rand2=rand() % 2 + 1;
 			airplaneLoc.X = wordLocation2.X-3;
@@ -520,7 +601,6 @@ void matchWords()
 		{
 			userInput ="";
 			words[1] ="";
-			wordsZapped++;
 			wordLocation2.Y=1;
 			rand2=rand() % 2 + 1;
 			airplaneLoc.X = wordLocation2.X-3;
@@ -528,14 +608,12 @@ void matchWords()
 	}
 	else if(userInput == words[2])
 	{
-		checkMultiply = 1;
-		executeMath = true;
+		addScore(multiply, score, wordsZapped);
 		if(words.size() > 4)
 		{
 			userInput ="";
 			iter_swap ( words.begin()+2 , words.begin()+4 );
 			words.erase(words.begin()+4);
-			wordsZapped++;
 			wordLocation3.Y=1;
 			rand3=rand() % 2 + 1;
 			airplaneLoc.X = wordLocation3.X-3;
@@ -544,7 +622,6 @@ void matchWords()
 		{
 			userInput ="";
 			words[2] ="";
-			wordsZapped++;
 			wordLocation3.Y=1;
 			rand3=rand() % 2 + 1;
 			airplaneLoc.X = wordLocation3.X-3;
@@ -552,14 +629,12 @@ void matchWords()
 	}
 	else if(userInput == words[3])
 	{
-		checkMultiply = 1;
-		executeMath = true;
+		addScore(multiply, score, wordsZapped);
 		if(words.size() > 4)
 		{
 			userInput ="";
 			iter_swap ( words.begin()+3 , words.begin()+4 );
 			words.erase(words.begin()+4);
-			wordsZapped++;
 			wordLocation4.Y=1;
 			rand4=rand() % 2 + 1;
 			airplaneLoc.X = wordLocation4.X-3;
@@ -568,7 +643,6 @@ void matchWords()
 		{
 			userInput ="";
 			words[3] ="";
-			wordsZapped++;
 			wordLocation4.Y=1;
 			rand2=rand() % 2 + 1;
 			airplaneLoc.X = wordLocation4.X-3;
@@ -577,33 +651,9 @@ void matchWords()
 
 	else
 	{
-		checkMultiply = -1;
-		userInput ="";
-		//Score --
+		//doesent match
 	}
 } 
-void multiplier()
-{
-	switch(checkMultiply)
-	{
-	case 1:
-		{
-			if(multiply <5)
-				multiply++;
-			checkMultiply = 0;
-		}
-		break;
-	case -1: 
-		multiply = 0;
-		break;
-	}
-	if(executeMath == true)
-	{
-		score = score + (wordsZapped * multiply);
-		executeMath = false;
-	}
-
-}
 
 //Print to Screen
 void airPlane()
