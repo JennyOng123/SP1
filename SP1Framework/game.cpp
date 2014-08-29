@@ -85,29 +85,29 @@ void shutdown()
 void mainMenu()
 {
 	gameTitle();
-	c.X= 40;
-	c.Y = 20;
+	c.X= 26;
+	c.Y = 24;
 	//render menu
-	writeToBuffer(c, "Start Game --- [1]");
-	c.Y++;
-	writeToBuffer(c, "How to play -- [2]");
-	c.Y++;
-	writeToBuffer(c, "Options ------ [3]");
-	c.Y++;
-	writeToBuffer(c, "Credits ------ [4]");
-	c.Y++;
-	writeToBuffer(c, "Quit Game ---- [5]");	
+	writeToBuffer(c, "Start Game -------------------------------- [1]");
+	c.Y+=2;
+	writeToBuffer(c, "How to play ------------------------------- [2]");
+	c.Y+=2;
+	writeToBuffer(c, "Options ----------------------------------- [3]");
+	c.Y+=2;
+	writeToBuffer(c, "Credits ----------------------------------- [4]");
+	c.Y+=2;
+	writeToBuffer(c, "Quit Game --------------------------------- [5]");	
 }
 void difficulty()
 {
 	//render menu
-	c.X=45;
-	c.Y= 15;
-	writeToBuffer(c,"EASY --- [1]");
-	c.Y++;
-	writeToBuffer(c,"MEDIUM - [2]");
-	c.Y++;
-	writeToBuffer(c,"HARD --- [3]");
+	c.X=25;
+	c.Y= 25;
+	writeToBuffer(c,"EASY ---------------------------------------- [1]");
+	c.Y+=2;
+	writeToBuffer(c,"MEDIUM -------------------------------------- [2]");
+	c.Y+=2;
+	writeToBuffer(c,"HARD ---------------------------------------- [3]");
 
 	switch(Difficulty)
 	{
@@ -201,14 +201,14 @@ void exitGame()
 void pauseScreen()
 {
 	gameHUD();
-	c.X=(ConsoleSize.X/2)-5;
+	c.X=(ConsoleSize.X/2)-25;
 	c.Y=20;
 	//render pause menu
-	writeToBuffer(c,"Resume --- [1]");
-	c.Y++;
-	writeToBuffer(c,"Restart -- [2]");
-	c.Y++;
-	writeToBuffer(c,"Back to main menu [3]");
+	writeToBuffer(c,"Resume ----------------------------------------- [1]");
+	c.Y+=2;
+	writeToBuffer(c,"Restart ---------------------------------------- [2]");
+	c.Y+=2;
+	writeToBuffer(c,"Back to main menu -------------------------------[3]");
 }
 
 //UPDATE FUNCTIONS
